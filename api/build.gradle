@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.7.9'
     id 'io.spring.dependency-management' version '1.0.15.RELEASE'
+    id 'org.asciidoctor.jvm.convert' version '3.3.2'
 }
 
 group = 'com.search'
@@ -12,6 +13,7 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+    asciidoctorExt
 }
 
 repositories {
@@ -29,7 +31,11 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'io.projectreactor:reactor-test'
 
+    asciidoctorExt 'org.springframework.restdocs:spring-restdocs-asciidoctor'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-webtestclient'
+
     implementation project(":core")
+
 
 }
 
@@ -38,3 +44,51 @@ tasks.named('test') {
 }
 
 tasks.register("prepareKotlinBuildScriptModel")
+
+
+// 변수 선언
+def snippetsDir
+
+ext {
+    println("ext task is started")
+    // Snippet 의 생성 위치를 지정
+    snippetsDir = file('build/generated-snippets')
+}
+
+
+test {
+    println("test task is started")
+    println("snippetDir : " + snippetsDir)
+    // Snippets 디렉토리를 출력으로 작업하도록 설정
+    outputs.dir snippetsDir
+}
+
+
+// asciidoctor task
+asciidoctor{
+    println("asciidoctor task is started")
+    println("snippetDir : " + snippetsDir)
+
+    inputs.dir snippetsDir
+// Configure the use of the asciidoctorExt configuration for extensions.
+    configurations 'asciidoctorExt'
+// 문서 생성 전 테스트가 실행되도록 test에 종속 설정
+    dependsOn test
+}
+
+//생성된 문서를 build/resources/main/static 에 복사하는 task
+task copyDocument(type: Copy){
+    dependsOn asciidoctor
+    from file("${asciidoctor.outputDir}")
+    into file("build/resources/main/static")
+}
+
+bootJar {
+    println("Output Diretory : " + "${asciidoctor.outputDir}")
+    //빌드 전 문서 생성 확인
+    dependsOn copyDocument
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
