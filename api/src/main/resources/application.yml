@@ -1,0 +1,27 @@
+spring:
+  messages: encoding=UTF-8
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        # show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+
+
+api-key:
+  kakao: ENC(uom7Qoi1OUjAA3GuEB7QapVg9UdugnuLY4SCmryxTiPT9fP9v+zNA3+YL4+EU2fgaFNgr7OieEQ=)
+  naver:
+    id : ENC(FdcV2Wr0pt7aa/i02WxE7LPw5Sm/KuKxdv1kVphkAJs=)
+    secret : ENC(Gw4jyC4BnkpvQ4+A7702X4029m77iHiS)
+
+
+logging.level:
+  org.hibernate.SQL: debug
