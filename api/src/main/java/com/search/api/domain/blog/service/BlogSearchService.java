@@ -13,7 +13,6 @@ import reactor.core.publisher.Mono;
 @Slf4j
 @RequiredArgsConstructor
 public class BlogSearchService {
-    //private final BlogSearchApi kakaoBlogSearchApi;
     private final BlogSearchApiImpl kakaoBlogSearchApi;
 
     public Mono<ResponseDto<BlogResDto>> search(SearchCondDto searchCond){

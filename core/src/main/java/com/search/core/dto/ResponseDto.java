@@ -3,8 +3,6 @@ package com.search.core.dto;
 import com.search.core.constant.ErrorCode;
 import lombok.Getter;
 
-import java.io.Serializable;
-
 @Getter
 public class ResponseDto<T> extends ResponseCommonDto {
     private T body;
