@@ -9,7 +9,7 @@ public class ResponseCommonDto {
     private final String code;
     private final String message;
     public ResponseCommonDto(ErrorCode errorCode){
-        if(errorCode == ErrorCode.SUCCESS){
+        if(errorCode.getCategory() == ErrorCode.ErrorCategory.SUCCESS){
             ok = Boolean.TRUE;
         } else{
             ok = Boolean.FALSE;
@@ -19,7 +19,7 @@ public class ResponseCommonDto {
     }
 
     public ResponseCommonDto(ErrorCode errorCode, String message){
-        if(errorCode == ErrorCode.SUCCESS){
+        if(errorCode.getCategory() == ErrorCode.ErrorCategory.SUCCESS){
             ok = Boolean.TRUE;
         } else{
             ok = Boolean.FALSE;

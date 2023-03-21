@@ -1,9 +1,0 @@
-블로그 검색 서비스
-
-다음 요청을 실행하면:
-
-include::{snippets}/blog/curl-request.adoc[]
-
-다음과 같은 응답을 반환합니다.
-
-include::{snippets}/blog/response-body.adoc[]

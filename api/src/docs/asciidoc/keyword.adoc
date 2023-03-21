@@ -1,0 +1,23 @@
+# 인기검색어 TOP 10 서비스
+
+## 요청
+### HTTP method
+- GET 방식
+
+### URL
+- http://localhost:8080/popular-keyword
+
+include::{snippets}/popular-keyword/curl-request.adoc[]
+
+
+## 응답
+
+### 예시
+- ok : 거래 성공 여부를 의미합니다. true면 성공, false면 실패입니다.
+- code : 거래 처리에 따른 코드입니다.
+- message : 거래 처리에 따른 메시지입니다.
+- body : 거래 Body 입니다. 검색어와 검색량 데이터를 List 형태로 제공합니다.
+- query : 검색어 입니다.
+- count : 검색량 입니다.
+
+include::{snippets}/popular-keyword/response-body.adoc[]

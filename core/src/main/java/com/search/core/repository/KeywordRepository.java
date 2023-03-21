@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 
 
 public interface KeywordRepository extends JpaRepository<Keyword, Long> {
-
     @Query("select new com.search.core.dto.PopularResDto(k.query, count(k.query))" +
             " from Keyword k" +
             " group by k.query" +

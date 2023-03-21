@@ -49,11 +49,13 @@ class BlogSearchApiImplTest {
         given(naverBlogSearchApi.search(any())).willReturn(Mono.error(new KBException(ErrorCode.API_ERROR)));
 
         //then
-        assertThrows(KBException.class, ()->{
+        KBException kbException = assertThrows(KBException.class, () -> {
             //when
             Mono<ResponseDto<BlogResDto>> response = kakaoBlogSearchApiImpl.search(test);
             response.block();
         });
+        assertEquals(ErrorCode.API_ERROR, kbException.getErrorCode());
+
     }
 
     @Test
@@ -84,6 +86,27 @@ class BlogSearchApiImplTest {
     }
 
     @Test
+    @DisplayName("카카오 블로그 검색 API에서 조회 결과가 없을 때, KBException (SUCCESS_BUT_NO_DATA) 발생하는지 테스트")
+    public void kakaoNoDataTest001(){
+        //given
+        SearchCondDto test = SearchCondDto.of("test", SearchCriteria.A, 1, 10);
+
+        BlogResDto emptyResponse = getEmptyResponse();
+
+        given(kakaoProvider.createResponseSpec(any())).willReturn(Mono.just(emptyResponse));
+        given(kakaoProvider.getProvider()).willReturn("KAKAO");
+
+        //when
+        //then
+        KBException kbException = assertThrows(KBException.class, () -> {
+            Mono<ResponseDto<BlogResDto>> response = kakaoBlogSearchApiImpl.search(test);
+            response.block();
+        });
+        assertEquals(ErrorCode.SUCCESS_BUT_NO_DATA, kbException.getErrorCode());
+    }
+
+
+    @Test
     @DisplayName("카카오 블로그 검색 API에 문제가 없을 때, 카카오 블로그 검색 API 활용해서 데이터 가져오는지 테스트")
     public void kakaoSuccessTest001(){
         //given
@@ -107,6 +130,12 @@ class BlogSearchApiImplTest {
                 })
                 .verifyComplete();
         then(eventPublisher).should(only()).publishEvent(any(Object.class));
+    }
+
+    private static BlogResDto getEmptyResponse(){
+        BlogResDto blogResDto = new BlogResDto();
+        blogResDto.setDocuments(new ArrayList<>());
+        return blogResDto;
     }
 
     private static BlogResDto getKakaoResponse() {

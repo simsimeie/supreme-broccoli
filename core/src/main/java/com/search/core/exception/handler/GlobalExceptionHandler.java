@@ -22,16 +22,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(KBException.class)
     public Mono<ResponseEntity<ResponseCommonDto>> handleGlobalException(KBException ex) {
         HttpStatus status = getHttpStatus(ex);
-        ResponseCommonDto errorResponse = getResponseCommonDto(ex);
+        ResponseCommonDto response = getResponseCommonDto(ex);
 
-        return Mono.just(ResponseEntity.status(status).body(errorResponse));
+        return Mono.just(ResponseEntity.status(status).body(response));
     }
 
     private HttpStatus getHttpStatus(KBException ex){
         ErrorCode errorCode = ex.getErrorCode();
-        if(errorCode.isClientSideError()){
+        if(errorCode.isSuccess()){
+            return HttpStatus.OK;
+        } else if(errorCode.isClientSideError()){
             return HttpStatus.BAD_REQUEST;
-        }else{
+        } else{
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
     }
@@ -64,6 +66,7 @@ public class GlobalExceptionHandler {
         return Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse));
     }
 
+    // 추후 추가될 수 있는 Post 방식으로 들어오는 값에 대해 Validation exception handling
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Mono<ResponseEntity<ResponseCommonDto>> handleGlobalException(MethodArgumentNotValidException ex){
         ErrorCode errorCode = ErrorCode.BAD_REQUEST;

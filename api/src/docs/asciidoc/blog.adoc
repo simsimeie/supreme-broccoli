@@ -1,0 +1,40 @@
+# 블로그 검색 서비스
+
+## 요청
+### HTTP method
+- GET 방식
+
+### URL
+- http://localhost:8080/blog
+
+### 쿼리 파라미터
+- query : 검색어를 입력합니다. 1000자 이하의 검색어만 가능합니다.
+- criteria : 검색 기준입니다. **값은 A(정확도순), R(최신순)만 유효합니다.**
+- page : Pagination 된 page offset을 의미합니다. 1 이상 50 이하의 값만 가능합니다.
+- size : 보여줄 데이터 수를 의미합니다. 1 이상 50 이하의 값만 가능합니다.
+
+### 예시
+
+include::{snippets}/blog/curl-request.adoc[]
+
+## 응답
+
+### 예시
+- ok : 거래 성공 여부를 의미합니다. true면 성공 , false면 실패입니다.
+- code : 거래 처리에 따른 코드입니다.
+
+    KB200 - 성공
+    KB20001 - 성공하였으나 검색 결과가 없을 때
+    KB400 - 유효하지 않은 request가 들어왔을 때
+    KB40001 - 검색조건에 유효하지 않은 값을 설정했을 때
+    KB500 - 기타에러
+    KB50001 - BlogSearch OPEN API에 문제가 있을 때
+    KB50002 - 데이터 처리 중 에러가 발생했을 때
+
+
+- message : 거래 처리에 따른 메시지입니다.
+- body : 거래 Body 입니다.
+- documents : 블로그 정보를 담고 있는 List 입니다.
+
+include::{snippets}/blog/response-body.adoc[]
+

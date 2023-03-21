@@ -14,14 +14,17 @@ spring:
         # show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
+    open-in-view: false
 
 
 api-key:
-  kakao: ENC(uom7Qoi1OUjAA3GuEB7QapVg9UdugnuLY4SCmryxTiPT9fP9v+zNA3+YL4+EU2fgaFNgr7OieEQ=)
+  kakao: ENC(jWHtySr9dp+0YpaI2DbVFAf8gOFwTZBebHK5eBUY9jOkj22ebq+vRr3olmyCSLRATsmNnE3qJck=)
   naver:
-    id : ENC(FdcV2Wr0pt7aa/i02WxE7LPw5Sm/KuKxdv1kVphkAJs=)
-    secret : ENC(Gw4jyC4BnkpvQ4+A7702X4029m77iHiS)
+    id : ENC(f1cy+08XGRFltWMT1cBfOwnR9Ue8h0jBXLwBiDFAxXY=)
+    secret : ENC(niOQadcSz2D5l1mCAr4PJFvA3W5Fh4Jb)
 
 
 logging.level:
   org.hibernate.SQL: debug
+
+

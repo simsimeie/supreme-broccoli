@@ -1,4 +1,4 @@
-package com.search.api.common.config;
+package com.search.api.domain.config;
 
 import com.search.api.domain.blog.service.BlogSearchApiImpl;
 import com.search.api.domain.blog.service.BlogSearchProvider;
@@ -21,8 +21,7 @@ public class BlogSearchConfig {
 
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
-        //executor.setMaxPoolSize(10);
-        //executor.setQueueCapacity(500);
+        executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors() * 5);
         executor.setThreadNamePrefix("async-event");
         executor.initialize();
 
@@ -31,10 +30,6 @@ public class BlogSearchConfig {
         return eventMulticaster;
     }
 
-    @Bean
-    public WebClient webClient(WebClient.Builder builder) {
-        return builder.build();
-    }
 
     @Bean
     public BlogSearchApiImpl naverBlogSearchApi(

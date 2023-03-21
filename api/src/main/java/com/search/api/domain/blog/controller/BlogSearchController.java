@@ -27,12 +27,14 @@ public class BlogSearchController {
     @GetMapping("/blog")
     public Mono<ResponseDto<BlogResDto>> blog(
             @Size(max=1000, message = "{query.limit}") String query
-            , @RequestParam(defaultValue = "A") SearchCriteria criteria
+            , @RequestParam(defaultValue = "A") String criteria
             , @Min(value = 1, message = "{page.min.limit}") @Max(value = 50, message = "{page.max.limit}")
               @RequestParam(defaultValue = "1") Integer page
             , @Min(value = 1, message = "{size.min.limit}") @Max(value = 50, message = "{size.max.limit}")
               @RequestParam(defaultValue = "10") Integer size
     ){
-        return blogSearchService.search(SearchCondDto.of(query.trim(), criteria, page, size));
+        SearchCriteria searchCriteria = SearchCriteria.transform(criteria);
+        return blogSearchService.search(SearchCondDto.of(query.strip(), searchCriteria, page, size));
     }
+
 }

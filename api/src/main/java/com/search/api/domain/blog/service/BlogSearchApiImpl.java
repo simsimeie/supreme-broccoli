@@ -32,12 +32,21 @@ public class BlogSearchApiImpl implements BlogSearchApi {
         return provider.createResponseSpec(searchCond)
                 .doOnSuccess(
                         d -> applicationEventPublisher.publishEvent(
-                                KeywordEventPub.of(searchCond.getKeyword(), provider.getProvider())
-                        )
+                                        KeywordEventPub.of(searchCond.getKeyword(), provider.getProvider()))
                 )
-                .flatMap(d -> Mono.just(ResponseDto.of(d)))
+                .flatMap(d -> {
+                    if(d.getDocuments().isEmpty()){
+                        return Mono.error(new KBException(ErrorCode.SUCCESS_BUT_NO_DATA));
+                    } else {
+                        return Mono.just(ResponseDto.of(d));
+                    }
+                } )
                 .doOnError(e -> {
-                    log.error("Error occurred while processing the {} API.", provider.getProvider());
+                    if(e instanceof KBException && ((KBException) e).getErrorCode() == ErrorCode.SUCCESS_BUT_NO_DATA) {
+                        log.error("No Data in {} API.", provider.getProvider());
+                    } else{
+                        log.error("Error occurred while processing the {} API.", provider.getProvider());
+                    }
                     if (e instanceof WebClientResponseException) {
                         WebClientResponseException ex = (WebClientResponseException) e;
                         log.error("HTTP status code : {}, Info : {}", ex.getRawStatusCode(), ex.getResponseBodyAsString());
@@ -45,6 +54,9 @@ public class BlogSearchApiImpl implements BlogSearchApi {
                 })
                 .onErrorResume(e -> {
                     if (null != alternativeApi) {
+                        if(e instanceof KBException && ((KBException) e).getErrorCode() == ErrorCode.SUCCESS_BUT_NO_DATA) {
+                            return Mono.error(e);
+                        }
                         return alternativeApi.search(searchCond);
                     } else {
                         if(e instanceof WebClientResponseException){
