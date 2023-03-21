@@ -1,6 +1,7 @@
 package com.search.core.dto;
 
-import com.search.core.constant.ErrorCode;
+import com.search.core.constant.Code;
+import com.search.core.constant.CodeCategory;
 import lombok.Getter;
 
 @Getter
@@ -8,23 +9,23 @@ public class ResponseCommonDto {
     private final Boolean ok;
     private final String code;
     private final String message;
-    public ResponseCommonDto(ErrorCode errorCode){
-        if(errorCode.getCategory() == ErrorCode.ErrorCategory.SUCCESS){
+    public ResponseCommonDto(Code code){
+        if(code.getCategory() == CodeCategory.SUCCESS){
             ok = Boolean.TRUE;
         } else{
             ok = Boolean.FALSE;
         }
-        code = errorCode.getCode();
-        message = errorCode.getMessage();
+        this.code = code.getCode();
+        message = code.getMessage();
     }
 
-    public ResponseCommonDto(ErrorCode errorCode, String message){
-        if(errorCode.getCategory() == ErrorCode.ErrorCategory.SUCCESS){
+    public ResponseCommonDto(Code code, String message){
+        if(code.getCategory() == CodeCategory.SUCCESS){
             ok = Boolean.TRUE;
         } else{
             ok = Boolean.FALSE;
         }
-        code = errorCode.getCode();
+        this.code = code.getCode();
         this.message = message;
     }
 

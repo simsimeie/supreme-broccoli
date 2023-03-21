@@ -1,37 +1,37 @@
 package com.search.core.exception;
 
 
-import com.search.core.constant.ErrorCode;
+import com.search.core.constant.Code;
 import lombok.Getter;
 
 @Getter
 public class KBException extends RuntimeException{
 
-    private final ErrorCode errorCode;
+    private final Code code;
 
-    public KBException(ErrorCode errorCode) {
+    public KBException(Code code) {
         super();
-        this.errorCode = errorCode;
+        this.code = code;
     }
 
-    public KBException(ErrorCode errorCode, String message ) {
+    public KBException(Code code, String message ) {
         super(message);
-        this.errorCode = errorCode;
+        this.code = code;
     }
 
-    public KBException(ErrorCode errorCode, String message, Throwable cause) {
+    public KBException(Code code, String message, Throwable cause) {
         super(message, cause);
-        this.errorCode = errorCode;
+        this.code = code;
     }
 
-    public KBException(ErrorCode errorCode, Throwable cause) {
+    public KBException(Code code, Throwable cause) {
         super(cause);
-        this.errorCode = errorCode;
+        this.code = code;
     }
 
-    public KBException(ErrorCode errorCode, String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+    public KBException(Code code, String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
         super(message, cause, enableSuppression, writableStackTrace);
-        this.errorCode = errorCode;
+        this.code = code;
     }
 
 }

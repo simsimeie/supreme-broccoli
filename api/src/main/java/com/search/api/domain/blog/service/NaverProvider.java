@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class NaverProvider implements BlogSearchProvider {
+public class NaverProvider implements BlogSearchApiProvider {
     private final WebClient webClient;
     private static final String PROVIDER = "NAVER";
     private static final String ACCURACY = "sim";

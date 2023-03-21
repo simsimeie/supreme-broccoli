@@ -1,6 +1,6 @@
 package com.search.api.domain.blog.constant;
 
-import com.search.core.constant.ErrorCode;
+import com.search.core.constant.Code;
 import com.search.core.exception.KBException;
 import lombok.Getter;
 
@@ -28,7 +28,7 @@ public enum SearchCriteria {
             }
         }
 
-        if(!isContain) throw new KBException(ErrorCode.SEARCH_CRITERIA_VALIDATION_ERROR);
+        if(!isContain) throw new KBException(Code.SEARCH_CRITERIA_VALIDATION_ERROR);
 
         return searchCriteria;
     }

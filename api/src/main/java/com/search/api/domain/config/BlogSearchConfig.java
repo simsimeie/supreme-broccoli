@@ -1,7 +1,7 @@
 package com.search.api.domain.config;
 
 import com.search.api.domain.blog.service.BlogSearchApiImpl;
-import com.search.api.domain.blog.service.BlogSearchProvider;
+import com.search.api.domain.blog.service.BlogSearchApiProvider;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.context.annotation.Bean;
@@ -46,7 +46,7 @@ public class BlogSearchConfig {
 
     @Bean
     public BlogSearchApiImpl naverBlogSearchApi(
-            @Qualifier("naverProvider") BlogSearchProvider naverProvider
+            @Qualifier("naverProvider") BlogSearchApiProvider naverProvider
             ,ApplicationEventPublisher publisher
     ){
         BlogSearchApiImpl naverBlogSearchApi = new BlogSearchApiImpl(
@@ -60,8 +60,8 @@ public class BlogSearchConfig {
 
     @Bean
     public BlogSearchApiImpl kakaoBlogSearchApi(
-            @Qualifier("kakaoProvider") BlogSearchProvider kakaoProvider
-            ,@Qualifier("naverProvider") BlogSearchProvider naverProvider
+            @Qualifier("kakaoProvider") BlogSearchApiProvider kakaoProvider
+            ,@Qualifier("naverProvider") BlogSearchApiProvider naverProvider
             ,ApplicationEventPublisher publisher
     ){
         BlogSearchApiImpl kakaoBlogSearchApi = new BlogSearchApiImpl(

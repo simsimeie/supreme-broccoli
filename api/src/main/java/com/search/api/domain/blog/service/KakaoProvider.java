@@ -17,7 +17,7 @@ import java.nio.charset.StandardCharsets;
 @Component
 @RequiredArgsConstructor
 @Slf4j
-public class KakaoProvider implements BlogSearchProvider {
+public class KakaoProvider implements BlogSearchApiProvider {
     private final WebClient webClient;
     @Value("${api-key.kakao}")
     private String API_KEY;

@@ -3,7 +3,7 @@ package com.search.api.domain.blog.service;
 import com.search.api.domain.blog.constant.SearchCriteria;
 import com.search.api.domain.blog.dto.BlogResDto;
 import com.search.api.domain.blog.dto.SearchCondDto;
-import com.search.core.constant.ErrorCode;
+import com.search.core.constant.Code;
 import com.search.core.dto.ResponseDto;
 import com.search.core.exception.KBException;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ class BlogSearchApiImplTest {
     @InjectMocks
     private BlogSearchApiImpl kakaoBlogSearchApiImpl;
     @Mock
-    private BlogSearchProvider kakaoProvider;
+    private BlogSearchApiProvider kakaoProvider;
     @Mock
     private BlogSearchApi naverBlogSearchApi;
     @Mock
@@ -46,7 +46,7 @@ class BlogSearchApiImplTest {
         SearchCondDto test = SearchCondDto.of("test", SearchCriteria.A, 1, 10);
         given(kakaoProvider.createResponseSpec(any())).willReturn(Mono.error(new Exception()));
         given(kakaoProvider.getProvider()).willReturn("KAKAO");
-        given(naverBlogSearchApi.search(any())).willReturn(Mono.error(new KBException(ErrorCode.API_ERROR)));
+        given(naverBlogSearchApi.search(any())).willReturn(Mono.error(new KBException(Code.API_ERROR)));
 
         //then
         KBException kbException = assertThrows(KBException.class, () -> {
@@ -54,7 +54,7 @@ class BlogSearchApiImplTest {
             Mono<ResponseDto<BlogResDto>> response = kakaoBlogSearchApiImpl.search(test);
             response.block();
         });
-        assertEquals(ErrorCode.API_ERROR, kbException.getErrorCode());
+        assertEquals(Code.API_ERROR, kbException.getCode());
 
     }
 
@@ -102,7 +102,7 @@ class BlogSearchApiImplTest {
             Mono<ResponseDto<BlogResDto>> response = kakaoBlogSearchApiImpl.search(test);
             response.block();
         });
-        assertEquals(ErrorCode.SUCCESS_BUT_NO_DATA, kbException.getErrorCode());
+        assertEquals(Code.SUCCESS_BUT_NO_DATA, kbException.getCode());
     }
 
 

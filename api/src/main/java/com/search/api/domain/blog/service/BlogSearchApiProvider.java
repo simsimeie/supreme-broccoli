@@ -4,7 +4,7 @@ import com.search.api.domain.blog.dto.BlogResDto;
 import com.search.api.domain.blog.dto.SearchCondDto;
 import reactor.core.publisher.Mono;
 
-public interface BlogSearchProvider {
+public interface BlogSearchApiProvider {
     Mono<BlogResDto> createResponseSpec(SearchCondDto searchCond);
     String getProvider();
 }
