@@ -1,5 +1,7 @@
 # supreme-broccoli
 
+## java -version
+JDK17
 
 ## Jar 파일 다운로드 경로
 https://drive.google.com/file/d/1sC4No__grmZBPeTiVzip8OGUxebCjq_s/view?usp=sharing
