@@ -16,6 +16,7 @@ import reactor.core.publisher.Mono;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
 @RestController
@@ -26,7 +27,9 @@ public class BlogSearchController {
     private final BlogSearchService blogSearchService;
     @GetMapping("/blog")
     public Mono<ResponseDto<BlogResDto>> blog(
-            @Size(max=1000, message = "{query.limit}") String query
+            @Size(max=1000, message = "{query.limit}")
+            @NotEmpty(message = "{query.notblank}")
+            String query
             , @RequestParam(defaultValue = "A") String criteria
             , @Min(value = 1, message = "{page.min.limit}") @Max(value = 50, message = "{page.max.limit}")
               @RequestParam(defaultValue = "1") Integer page
