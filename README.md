@@ -2,7 +2,7 @@
 
 
 ## Jar 파일 다운로드 경로
-https://drive.google.com/file/d/1QkJI48tX80wwYGV4sQh_lsFTwdooUoh2/view?usp=sharing
+https://drive.google.com/file/d/1JlRMslogGomuojD4mW2GccJcsRvGofeo/view?usp=sharing
 
 ---
 
